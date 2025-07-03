@@ -6,7 +6,9 @@
 
 ## 项目结构
 Create_finetune/
+
 ├── DeepSeek-R1-Distill-Qwen-1.5B/     # 基础模型文件
+
 │   ├── config.json
 │   ├── generation_config.json
 │   ├── model.safetensors
