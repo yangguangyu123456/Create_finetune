@@ -10,20 +10,35 @@ Create_finetune/
 ├── DeepSeek-R1-Distill-Qwen-1.5B/     # 基础模型文件
 
 │   ├── config.json
+
 │   ├── generation_config.json
+
 │   ├── model.safetensors
+
 │   ├── tokenizer.json
+
 │   └── tokenizer_config.json
+
 ├── data/                              # 原始文档数据
+
 │   ├── 煤矿安全规程相关文档.txt
+
 │   ├── 煤矿建设安全规范.txt
+
 │   ├── 防治煤与瓦斯突出细则.txt
+
 │   └── ... (共40+个煤矿安全相关文档)
+
 ├── Generate_QAdata.py                 # 数据集构造脚本
+
 ├── deepseek_QA.py                     # 问答生成提示模板
+
 ├── QAdata_all.json                    # 生成的问答数据集
+
 ├── train.py                           # 微调训练脚本
+
 ├── inference.py                       # 推理测试脚本
+
 └── output/                            # 训练输出目录
 
 ## 数据集构造
