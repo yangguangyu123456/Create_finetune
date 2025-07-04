@@ -112,35 +112,56 @@ system_prompt = '''根据下面提供有关煤矿安全领域文本，请你仔�
 - 梯度累积 ：支持大批次训练
 ### 2. 训练配置
 train.py 中的关键配置：
+
 模型配置
+
 class ModelArguments:
+
     model_name_or_path: str = "./DeepSeek-R1-Distill-Qwen-1.5B"
+    
     lora_rank: int = 64              # LoRA秩
+    
     lora_alpha: int = 16             # LoRA缩放参数
+    
     lora_dropout: float = 0.1        # LoRA dropout
+    
     use_4bit: bool = True            # 4-bit量化
+    
     bnb_4bit_compute_dtype: str = "bfloat16"
+    
     bnb_4bit_quant_type: str = "nf4"
 
 训练配置
 class TrainingArguments_Custom:
+
     num_train_epochs: int = 6        # 训练轮数
+    
     per_device_train_batch_size: int = 4
+    
     gradient_accumulation_steps: int = 4
+    
     learning_rate: float = 2e-4      # 学习率
+    
     weight_decay: float = 0.01
+    
     warmup_ratio: float = 0.1
+    
     lr_scheduler_type: str = "cosine"
 
 ### 3. 数据处理
 对话格式化：
 def format_conversation(self, input_text: str, output_text: str) -> str:
+
     return f"system: 你是一个煤矿安全领域的知识达人，你对相关煤矿安全规章规程制度、技术等文档非常熟悉。请你专业正确地解答用户想问的煤矿安全相关问题。\nuser: {input_text}\nresponse: {output_text}"
 
 LoRA目标模块：
+
 target_modules=[
+
     "q_proj", "k_proj", "v_proj", "o_proj",
+    
     "gate_proj", "up_proj", "down_proj"
+    
 ]
 
 ### 4. 训练流程
@@ -151,6 +172,7 @@ target_modules=[
 5. 模型保存 ：保存LoRA适配器和训练配置
 ### 5. 训练启动
 python train.py
+
 训练完成后，模型将保存在 ./output/deepseek-coal-safety-{timestamp}/ 目录中
 ### 6. 推理使用
 #### 1. 推理脚本
@@ -195,10 +217,15 @@ python Generate_QAdata.py
 python train.py
 ### 3. 推理测试
 交互式问答
+
 python inference.py --peft_model ./output/your_model_path
+
 单个问题测试
+
 python inference.py --peft_model ./output/your_model_path --question "你的问题"
+
 批量问题测试
+
 python inference.py --peft_model./output/your_model_path --questions_file questions.json --output_file results.json
 
 ## 项目特点
@@ -216,4 +243,5 @@ python inference.py --peft_model./output/your_model_path --questions_file questi
 
 ## 致谢
 感谢智谱AI和 Hugging Face 等开源社区的贡献，为项目提供了强大的技术支持。
+
 感谢https://github.com/yaosenJ/CoalQA的数据源
